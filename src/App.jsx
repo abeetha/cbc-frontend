@@ -1,0 +1,28 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import ProductCard from './components/productCard.jsx'
+import UserData from './components/UserData.jsx'
+import './App.css'
+import Testing from './components/testing.jsx'
+import LoginPage from './pages/loginPage.jsx'
+import HomePage from './pages/HomePage.jsx'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <BrowserRouter>
+        <Routes path="/*">
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/*" element={<h1>404 error</h1>} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
+}
+
+export default App
