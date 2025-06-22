@@ -1,23 +1,23 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import ProductCard from './components/productCard.jsx'
-import UserData from './components/UserData.jsx'
 import './App.css'
-import Testing from './components/testing.jsx'
 import LoginPage from './pages/loginPage.jsx'
 import HomePage from './pages/HomePage.jsx'
+import SignInPage from './pages/signInPage.jsx'
+import AdminHomePage from './pages/adminHomePage.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-
+import { Toaster } from 'react-hot-toast'
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
       <BrowserRouter>
+      <Toaster position='top-right'/>
         <Routes path="/*">
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignInPage />} />
+          <Route path="/admin/*" element={<AdminHomePage />} />
           <Route path="/*" element={<h1>404 error</h1>} />
         </Routes>
       </BrowserRouter>
