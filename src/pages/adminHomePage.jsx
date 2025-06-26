@@ -21,12 +21,13 @@ import { MdInventory2, MdOutlinePeople } from "react-icons/md";
 import { RiFileList3Line } from "react-icons/ri";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AdminProductsPage from './admin/adminProductPage.jsx'
+import AddProductForm from "./admin/addProductForm.jsx";
 
 export default function AdminHomePage() {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside className="w-[20%] bg-blue-600 text-white p-6 flex flex-col gap-6 shadow-lg">
+      <aside className="h-[900px] w-[20%] bg-blue-600 text-white p-6 flex flex-col gap-6 shadow-lg">
         <h1 className="text-2xl font-bold text-center mb-4">Admin Panel</h1>
         <Link
           to="/admin/dashboard"
@@ -59,10 +60,11 @@ export default function AdminHomePage() {
       </aside>
 
       {/* Main Content Area */}
-       <div className="w-[80%] h-screen bg-red-600">
+       <div className="w-[80%] h-screen">
         <Routes path="/*">
         <Route path="/dashboard" element={<h1>Dashboard</h1>} />
         <Route path="/products" element={<AdminProductsPage/>} />
+        <Route path="/products/addProduct" element={<AddProductForm/>} />
         <Route path="/orders" element={<h1>Orders</h1>} />
         <Route path="/customers" element={<h1>Customers</h1>} />
         <Route path="/*" element={<h1>404 not found the admin page</h1>} />
