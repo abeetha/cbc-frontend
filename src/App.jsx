@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import LoginPage from './pages/loginPage.jsx'
-import HomePage from './pages/HomePage.jsx'
+import HomePage from './pages/homePage.jsx'
 import SignInPage from './pages/signInPage.jsx'
 import AdminHomePage from './pages/adminHomePage.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
