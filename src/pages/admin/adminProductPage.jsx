@@ -127,6 +127,8 @@ export default function AdminProductsPage() {
                 .get('http://localhost:3000/api/products')
                 .then((res) => {
                     setProducts(res.data);
+                    console.log(res.data);
+                    setProductsLoaded(true);
                 })
                 .catch((error) => {
                     console.error('Error fetching products:', error);
@@ -141,9 +143,7 @@ export default function AdminProductsPage() {
             </Link>
             <h1 className="text-3xl font-bold text-gray-800 mb-6">Admin Products Page</h1>
             {
-                productsLoaded?<div className="w-full b-full flex justify-center items-center">
-             <div className="w-[60px] h-[60px] border-[4px] border-gray-200 border-b-[#3b82f6] animate-spin rounded-full"></div>
-            </div>:<div className="overflow-x-auto shadow-lg rounded-lg bg-white">    
+                productsLoaded?<div className="overflow-x-auto shadow-lg rounded-lg bg-white">    
                 <table className="min-w-full text-left text-sm text-gray-800">
                     <thead className="bg-blue-600 text-white uppercase text-xs">
                         <tr>
@@ -204,6 +204,8 @@ export default function AdminProductsPage() {
                 {products.length === 0 && (
                     <div className="text-center text-gray-600 p-6">No products available.</div>
                 )}
+            </div>:<div className="w-full b-full flex justify-center items-center">
+             <div className="w-[60px] h-[60px] border-[4px] border-gray-200 border-b-[#3b82f6] animate-spin rounded-full"></div>
             </div>
             }
 

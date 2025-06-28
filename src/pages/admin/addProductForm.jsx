@@ -45,22 +45,32 @@ import { useState } from "react";
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import  uploadMediaToSupabase  from "../../utils/mediaUpload.js";
 
 export default function AddProductForm() {
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [alternativeNames, setAlternativeNames] = useState("");
     const [imageUrls, setImageUrls] = useState("");
+    const [imagefiles, setImageFiles] = useState([]);
     const [price, setPrice] = useState("");
     const [lastPrice, setLastPrice] = useState("");
     const [stock, setStock] = useState("");
     const [description, setDescription] = useState("");
-    const navigate= useNavigate
+    const navigate = useNavigate();
 
     async function handleSubmit() {
         const altNames = alternativeNames.split(',');
-        const imgUrls = imageUrls.split(',');
+        // const imgUrls = imageUrls.split(',');
+        const promiseArray = [];
 
+        for(let i = 0; i < imagefiles.length; i++) {
+            promiseArray[i]=uploadMediaToSupabase(imagefiles[i]);
+           
+        }
+        const imgUrls = await Promise.all(promiseArray);
+        console.log(imgUrls);
+// return
         const product = {
             productId: productId,
             productName: productName,
@@ -81,6 +91,7 @@ export default function AddProductForm() {
             navigate("/admin/products");
             toast.success("Product added successfully")
         } catch (err) {
+            console.error(err); 
             toast.error("Failed to add product");
         }
     }
@@ -130,11 +141,16 @@ export default function AddProductForm() {
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">Image URLs</label>
                         <input
-                            type="text"
-                            placeholder="Enter image URL(s)"
-                            value={imageUrls}
-                            onChange={(e) => setImageUrls(e.target.value)}
-                            className="bg-white border border-gray-300 rounded px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            type="file"
+                            className="block w-full text-sm text-gray-800
+                                       file:mr-4 file:py-2 file:px-4
+                                       file:rounded file:border-0
+                                       file:text-sm file:font-semibold
+                                      file:bg-blue-50 file:text-black-700
+                                      hover:file:bg-blue-100"
+                            placeholder="Enter Image URLs(comma-separated)"
+                            onChange={(e) => setImageFiles(e.target.files)}
+                            multiple
                         />
                     </div>
 

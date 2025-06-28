@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 import LoginPage from './pages/loginPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import SignInPage from './pages/signInPage.jsx'
@@ -10,7 +9,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <div className='bg-[#f3f3f3]'>
       <BrowserRouter>
       <Toaster position='top-right'/>
         <Routes path="/*">
@@ -21,7 +20,7 @@ function App() {
           <Route path="/*" element={<h1>404 error</h1>} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   )
 }
 
