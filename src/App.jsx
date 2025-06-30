@@ -13,11 +13,11 @@ function App() {
       <BrowserRouter>
       <Toaster position='top-right'/>
         <Routes path="/*">
-          <Route path="/" element={<HomePage />} />
+          <Route path="/*" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignInPage />} />
           <Route path="/admin/*" element={<AdminHomePage />} />
-          <Route path="/*" element={<h1>404 error</h1>} />
+          {/* <Route path="/*" element={<h1>404 error</h1>} /> */}
         </Routes>
       </BrowserRouter>
     </div>

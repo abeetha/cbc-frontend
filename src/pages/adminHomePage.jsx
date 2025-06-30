@@ -22,6 +22,7 @@ import { RiFileList3Line } from "react-icons/ri";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AdminProductsPage from './admin/adminProductPage.jsx'
 import AddProductForm from "./admin/addProductForm.jsx";
+import EditProductForm from "./admin/editProductForm.jsx";
 
 export default function AdminHomePage() {
   return (
@@ -65,6 +66,7 @@ export default function AdminHomePage() {
         <Route path="/dashboard" element={<h1>Dashboard</h1>} />
         <Route path="/products" element={<AdminProductsPage/>} />
         <Route path="/products/addProduct" element={<AddProductForm/>} />
+        <Route path="/products/editProduct" element={<EditProductForm/>} />
         <Route path="/orders" element={<h1>Orders</h1>} />
         <Route path="/customers" element={<h1>Customers</h1>} />
         <Route path="/*" element={<h1>404 not found the admin page</h1>} />

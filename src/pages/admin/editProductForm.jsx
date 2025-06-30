@@ -1,77 +1,43 @@
-// export default function AddProductForm() {
-//     return (
-//         <div className="w-full h-full ">
-//             <h1 className="text-2xl font-bold text-center">Add New Product</h1>
-//             <div className="flex flex-col w-full border items-center">
-//                 <div className="flex flex-col">
-//                     <label>Product ID</label>
-//                     <input type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <div className="flex flex-col">
-//                     <label>Product Name</label>
-//                     <input type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <div className="flex flex-col">
-//                     <label>Alternative Names</label>
-//                     <input type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <div className="flex flex-col">
-//                     <label>Image URLs</label>
-//                     <input type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <div className="flex flex-col">
-//                     <label>Price</label>
-//                     <input type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <div className="flex flex-col">
-//                     <label>Last Price</label>
-//                     <input type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <div className="flex flex-col">
-//                     <label>Stock</label>
-//                     <input type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <div className="flex flex-col">
-//                     <label>Description</label>
-//                     <textarea type="text" className="w-[200px] bg-white" />
-//                 </div>
-//                 <button className="w-[200px]">Add Product</button>"
-//             </div>
-//         </div>
-//     )
-// }
 
 import { useState } from "react";
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from "react-router-dom";
-import  uploadMediaToSupabase  from "../../utils/mediaUpload.js";
+import { useLocation, useNavigate } from "react-router-dom";
+import uploadMediaToSupabase from "../../utils/mediaUpload.js";
 
-export default function AddProductForm() {
-    const [productId, setProductId] = useState("");
-    const [productName, setProductName] = useState("");
-    const [alternativeNames, setAlternativeNames] = useState("");
-    const [imageUrls, setImageUrls] = useState("");
-    const [imagefiles, setImageFiles] = useState([]);
-    const [price, setPrice] = useState("");
-    const [lastPrice, setLastPrice] = useState("");
-    const [stock, setStock] = useState("");
-    const [description, setDescription] = useState("");
+export default function EditProductForm() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const product = location.state.product
+    const altNames = product.altNames.join(",")
+    if (!product) {
+        navigate("/admin/products")
+    }
+    const [productId, setProductId] = useState(product.productId);
+    const [productName, setProductName] = useState(product.productName);
+    const [alternativeNames, setAlternativeNames] = useState(altNames);
+    const [imagefiles, setImageFiles] = useState([]);
+    const [price, setPrice] = useState(product.price);
+    const [lastPrice, setLastPrice] = useState(product.lastPrice);
+    const [stock, setStock] = useState(product.stock);
+    const [description, setDescription] = useState(product.description);
+
 
     async function handleSubmit() {
         const altNames = alternativeNames.split(',');
         // const imgUrls = imageUrls.split(',');
-        const promiseArray = [];
+        const promisesArray = [];
+        let imgUrls = product.images
+        if (imagefiles.length > 0) {
+            for (let i = 0; i < imagefiles.length; i++) {
+                promisesArray[i] = uploadMediaToSupabase(imagefiles[i]);
 
-        for(let i = 0; i < imagefiles.length; i++) {
-            promiseArray[i]=uploadMediaToSupabase(imagefiles[i]);
-           
+            }
+             imgUrls = await Promise.all(promisesArray);
         }
-        const imgUrls = await Promise.all(promiseArray);
         console.log(imgUrls);
-// return
-        const product = {
+        // return
+        const productData = {
             productId: productId,
             productName: productName,
             alternativeNames: altNames,
@@ -83,8 +49,8 @@ export default function AddProductForm() {
         }
         const token = localStorage.getItem("user");
         try {
-            // await axios.post("http://localhost:3000/api/products", product, {
-            await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/products", product, {
+            // await axios.put("http://localhost:3000/api/products", product, {
+            await axios.put(import.meta.env.VITE_BACKEND_URL+"/api/products/"+product.productId,productData, {
                 headers: {
                     Authorization: "Bearer " + token
                 }
@@ -92,13 +58,13 @@ export default function AddProductForm() {
             navigate("/admin/products");
             toast.success("Product added successfully")
         } catch (err) {
-            console.error(err); 
+            console.error(err);
             toast.error("Failed to add product");
         }
     }
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">Add New Product</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-6">Edit Product Form</h1>
 
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
                 <div className="space-y-4">
@@ -106,6 +72,7 @@ export default function AddProductForm() {
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">Product ID</label>
                         <input
+                            disabled
                             type="text"
                             placeholder="Enter product ID"
                             value={productId}
@@ -209,7 +176,7 @@ export default function AddProductForm() {
                         className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300"
                         onClick={handleSubmit}
                     >
-                        Add Product
+                        Update Product
                     </button>
                 </div>
             </div>

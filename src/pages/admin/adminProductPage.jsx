@@ -114,7 +114,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { FaPencil } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 export default function AdminProductsPage() {
@@ -136,6 +136,8 @@ export default function AdminProductsPage() {
                 });
         }
     }, [productsLoaded]);
+
+    const navigate = useNavigate();
 
     return (
         <div className="min-h-screen bg-gray-100 p-8 relative">
@@ -173,6 +175,9 @@ export default function AdminProductsPage() {
                                     <button
                                         title="Edit"
                                         className="hover:text-blue-800 transition"
+                                        onClick={()=>{
+                                          navigate("/admin/products/editProduct",{state : {product : product}});
+                                        }}
                                     >
                                         <FaPencil />
                                     </button>
