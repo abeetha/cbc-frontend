@@ -12,7 +12,7 @@ export default function ProductOverview() {
     const [status, setStatus] = useState("loading")
     useEffect(
         () => {
-            console.log(productId)
+            // console.log(productId)
             axios.get(import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId).then((res) => {
                 // console.log(res.data)
                 if (res.data == null) {

@@ -10,6 +10,7 @@ export default function Header(){
         <Link to="/products" className="text-[#cd7225] font-bold text-xl hover:border-b border-b-[#cd7225]">Products</Link>
         <Link to="/about" className="text-[#cd7225] font-bold text-xl hover:border-b border-b-[#cd7225]">About Us</Link>
         <Link to="/contact" className="text-[#cd7225] font-bold text-xl hover:border-b border-b-[#cd7225]">Contact Us</Link>
+        <Link to="/cart" className="text-[#cd7225] font-bold text-xl hover:border-b border-b-[#cd7225]">Cart</Link>
         </div>
         </header>
     );
